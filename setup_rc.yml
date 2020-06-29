@@ -1,0 +1,16 @@
+- hosts: all
+  vars: 
+        - x: "export JAVA_HOME=/usr/java/jdk1.8.0_171-amd64/
+              \nexport PATH=/usr/java/jdk1.8.0_171-amd64/bin/:$PATH
+              \niptables -F"
+  tasks:     
+        - lineinfile:
+                     path: "/etc/rc.d/rc.local"
+                     line:  "{{ x }}"
+                          
+                     insertafter: "touch /var/lock/subsys/local" 
+       
+        - command: 
+                  cmd: "chmod +x /etc/rc.d/rc.local"
+
+                 

@@ -1,0 +1,31 @@
+- hosts: all
+  vars: 
+       - x: "\n<property>\n<name>dfs.name.dir</name>\n<value>/nn</value>\n</property>"
+       - y: "\n<property>\n<name>fs.default.name</name>\n<value>hdfs://nn:9001</value>\n</property>"        
+  tasks: 
+        - hostname:
+                   name: "nn"
+        - file:    
+                   path: "/nn"
+                   state: "directory" 
+                   
+        - command: 
+                   cmd: "echo Y | hadoop namenode -format"
+         
+        - lineinfile: 
+                   path: "/etc/hadoop/hdfs-site.xml"
+                   line:  "{{ x }}"
+                   insertafter: "<configuration>"
+   
+        - lineinfile: 
+                   path: "/etc/hadoop/core-site.xml"
+                   line: "{{ y }}"
+                   insertafter: "<configuration>"
+        - command:  "hadoop-daemon.sh start namenode"
+
+
+
+
+
+                         
+                   

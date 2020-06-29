@@ -1,0 +1,7 @@
+- hosts: all
+  tasks: 
+        - copy:
+               dest: "/root/"
+               src: "/root/Software/hadoop-1.2.1-1.x86_64.rpm"
+        - command:
+               cmd: "rpm -ivh hadoop-1.2.1-1.x86_64.rpm --force"

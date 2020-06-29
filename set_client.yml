@@ -1,0 +1,8 @@
+- hosts: all
+  vars: 
+       - x: "<property>\n<name>fs.default.name</name>\n<value>hdfs://nn:9001</value>\n</property>"
+  tasks:
+       - lineinfile: 
+                   path: "/etc/hadoop/core-site.xml"
+                   line:  "{{ x }}"
+                   insertafter: "<configuration>"

@@ -1,0 +1,15 @@
+- hosts: all
+  vars: 
+       - x: "\n<property>\n<name>mapred.job.tracker</name>\n<value>jt:9002</value>\n</property>"
+       - y: "\n<property><name>fs.default.name</name><value>hdfs://nn:9001</value></property>"
+  tasks: 
+        - hostname:
+                     name: "jt"
+        - lineinfile: 
+                     path: "/etc/hadoop/mapred-site.xml"
+                     line: "{{ x }}"
+                     insertafter: "<configuration>" 
+        - lineinfile:
+                     path: "/etc/hadoop/core-site.xml"
+                     line: "{{ y }}"
+                     insertafter: "<configuration>"

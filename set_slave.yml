@@ -1,0 +1,22 @@
+- hosts: all
+  vars:
+       - x: "\n<property>\n<name>dfs.data.dir</name>\n<value>/data</value>\n</property>"
+       - y: "\n<property>\n<name>fs.default.name</name>\n<value>hdfs://nn:9001</value>\n</property>"
+       - z: "\n<property>\n<name>mapred.job.tracker</name>\n<value>jt:9002</value>\n</property>"
+  tasks: 
+        - hostname:
+                   name: "dn1"
+        - command: "mkdir /data"
+        - lineinfile:
+                   path: "/etc/hadoop/hdfs-site.xml"
+                   line: "{{ x }}"
+                   insertafter: "<configuration>"
+        - lineinfile: 
+                   path: "/etc/hadoop/core-site.xml"
+                   line: "{{ y }}"
+                   insertafter: "<configuration>"
+        - lineinfile:
+                   path: "/etc/hadoop/mapred-site.xml"
+                   line: "{{ z }}"
+                   insertafter: "<configuration>"
+       
